@@ -1,5 +1,91 @@
-<Title>Hello World!</Title>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Starter Drawing Synth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<audio controls>
-    <source src="audio/my-sound.mp3" type="audio/mp3"></source>
-</audio>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://unpkg.com/tone"></script>
+    <script type="module">
+        import {
+            startAudio,
+            playNote,
+            addToTransport,
+            startTransport,
+            testTransport,
+            stopTransport,
+            getBlocksFromCanvas,
+            blockOrderToTransport
+        } from "./script.js";
+
+        window.startAudio = startAudio;
+        window.playNote = playNote;
+        window.addToTransport = addToTransport;
+        window.startTransport = startTransport;
+        window.testTransport = testTransport;
+        window.stopTransport = stopTransport;
+        window.getBlocksFromCanvas = getBlocksFromCanvas;
+        window.blockOrderToTransport = blockOrderToTransport;
+
+    </script>
+    <!-- Load Fabric.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+</head>
+<body>
+<h1>You can draw and hear things</h1>
+<button onclick="startAudio()">Start the synth</button>
+<button onclick="testTransport()">Test Transport</button>
+<button onclick="addToTransport('C4', '8n', '4n', '0')">Add to Transport</button>
+<button onclick="startTransport()">Start Transport</button>
+<button onclick="stopTransport()">Stop Transport</button>
+<button onclick="setBrushMode()" id="modeButton">Pen</button>
+<button onclick="setEraserMode()">Eraser</button>
+<button onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Add canvas to transport</button>
+<div>
+    <canvas id="canvas" width="600" height="400" style="border:1px solid #ccc"></canvas>
+    <!--TODO: Split canvas into notes -->
+    <!--Split canvas into smaller quadrants
+        Assign quadrants to notes
+        Iterate over line object(s) drawn
+        If line intersects with quadrant, add note to transport
+        (?) Depending on # of times it appears change... length? (?)
+        (?) Color affects something else (?)
+        Play transport
+    -->
+</div>
+</body>
+<div class="padded-div">
+    <div class="cell">1</div>
+    <div class="cell">2</div>
+    <div class="cell">3</div>
+    <div class="cell">4</div>
+    <div class="cell">5</div>
+    <div class="cell">6</div>
+    <div class="cell">7</div>
+    <div class="cell">8</div>
+</div>
+
+<script type="module" src="./cells.js"></script>
+<script type="module">
+    import {
+        blocks
+    } from "./cells.js"
+
+    window.blocks = blocks;
+
+</script>
+<script src="./drawing-things.js"></script>
+<script type="module">
+    import {
+        setBrushMode,
+        setEraserMode,
+        canvas
+    } from "./drawing-things.js";
+
+    window.setBrushMode = setBrushMode;
+    window.setEraserMode = setEraserMode;
+    window.canvas = canvas;
+
+</script>
+</html>

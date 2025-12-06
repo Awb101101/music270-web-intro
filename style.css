@@ -1,0 +1,23 @@
+body {
+    min-height: 100vh;
+    background: #f0f0f0;
+}
+
+.padded-div {
+    padding: 10px 10px 10px 10px;
+    background: #f0f534;
+    display: grid;                   /* make it a grid container */
+    grid-template-columns: repeat(4, 50px); /* 4 columns */
+    grid-gap: 5px;                   /* spacing between cells */
+}
+
+.cell {
+    background: #f31534;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    font-weight: bold;
+}
