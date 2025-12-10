@@ -1,17 +1,9 @@
-import { playNote } from "./script.js";
-
 function nextLetter(c) {
     return String.fromCharCode(c.charCodeAt(0) + 1);
 }
 
-const cells = document.getElementsByClassName("cell")
-
-for (let i = 0; i < cells.length; i++) {
-    const cell = cells[i]
-    cell.addEventListener("click", () => playNote(`C${i}`, "8n"));
-}
-
 export const blocks = []
+const numBlocks = 8
 const canvasWidth = 600
 const canvasHeight = 400
 const numCols = 4
@@ -19,7 +11,7 @@ const numRows = 2
 
 let currentX = 0
 let currentY = 0
-for (let i = 0; i < cells.length; i++) {
+for (let i = 0; i < numBlocks; i++) {
     blocks[i] = [currentX, currentY]
     blocks[i] = {
         xMin: currentX,
@@ -34,9 +26,9 @@ for (let i = 0; i < cells.length; i++) {
     }
 }
 
-let letter = "A"
+let letter = "C"
 for (let block of blocks) {
-    block.note =  `${letter}4`
+    block.note =  letter
     if (letter === "G") {
         letter = "A"
     } else {

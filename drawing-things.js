@@ -15,6 +15,14 @@ export function setEraserMode() {
     }
 }
 
+export function deleteAllCanvas() {
+    canvas.getObjects().forEach(obj => canvas.remove(obj));
+}
+
+export function changeBrushColor(color) {
+    penBrush.color = color;
+}
+
 // Initialize Fabric canvas
 export const canvas = new fabric.Canvas('canvas');
 
@@ -34,7 +42,7 @@ modeButton.addEventListener("click", () => {
 });
 
 canvas.on('path:created', (event) => {
-    // console.log('User drew a path:', event.path);
+    console.log('User drew a path:', event.path);
     event.path.isSelectable = true;
     event.path.evented = true;
 });

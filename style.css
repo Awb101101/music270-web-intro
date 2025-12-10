@@ -21,3 +21,16 @@ body {
     width: 50px;
     font-weight: bold;
 }
+
+.dropdown {
+    border: 1px solid #ccc;
+    margin-left: 120px;
+    padding: 8px;
+    width: 80px;
+    background: white;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
