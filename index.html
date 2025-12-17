@@ -10,16 +10,9 @@
 <body>
 <!--TODO: Replace onclick logic with Event Listeners and remove global variables-->
 <h1>Drawing Synth</h1>
-<p>To use the synth, draw on the canvas. Different colors represent different octaves. Longer lines result in longer notes.</p>
-<!--<button onclick="startAudio()">Start the synth</button>-->
-<!--<button onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Play</button>-->
-<!--<button id="menuButton">Select Color</button>-->
-<!--<div id="dropdownMenu" class="dropdown hidden">-->
-<!--    <button onclick="changeBrushColor('red')">Red Pen</button>-->
-<!--    <button onclick="changeBrushColor('blue')">Blue Pen</button>-->
-<!--    <button onclick="changeBrushColor('green')">Green Pen</button>-->
-<!--</div>-->
-<!--<button onclick="deleteAllCanvas()">Delete All</button>-->
+<h3>
+    To use the synth, draw on the canvas. Different colors represent different octaves. Longer lines result in longer notes.
+</h3>
 <div class="container">
     <div>
         <button class="menu-button"  onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Play</button>
@@ -41,6 +34,16 @@
         <p id="playing-note"></p>
     </div>
 </div>
+<p>
+    How it really works:
+</p>
+<p style="margin-left: 20px">
+    The canvas is split into eight quadrants: C, D, E, F, G, A, B, C. Four quadrants per row and two rows on the canvas.
+    The more line data in that quadrant  of the same "type" adds more time to that note.
+    A "type" of note is the combination letter and octave. If four lines are
+    drawn in the top left corner in a row, it will be read as one long line.
+    The faster the line is drawn, the less data is in the quadrant.
+</p>
 <script src="./page-things.js"></script>
 <script src="https://unpkg.com/tone"></script>
 <script type="module">

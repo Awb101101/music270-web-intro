@@ -73,7 +73,7 @@ export function getBlocksFromCanvas(lines, blocks) {
                         prevNote = block.note + "3"
                     } else {
                         let duration = blockOrder.pop()
-                        blockOrder.push([duration[0], duration[1] + 0.1])
+                        blockOrder.push([duration[0], duration[1] + 0.07])
                     }
                 }
             }
