@@ -84,6 +84,16 @@ export function getBlocksFromCanvas(lines, blocks) {
 
 export function blockOrderToTransport(lines, blocks, synthType="triangle") {
     const blockOrder = getBlocksFromCanvas(lines, blocks);
+
+    Tone.Transport.stop();
+    Tone.Transport.cancel(0);
+    Tone.Transport.seconds = 0;
+
+    if (window.synth) {
+        window.synth.releaseAll();
+        window.synth.dispose();
+    }
+
     console.log(blockOrder)
     window.synth = new Tone.PolySynth(Tone.Synth, {
         oscillator: {
@@ -104,6 +114,8 @@ export function blockOrderToTransport(lines, blocks, synthType="triangle") {
         console.log("Playing:", note);
 
         Tone.Transport.scheduleOnce((time) => {
+            const noteLength = String(note[1])
+            document.getElementById("playing-note").innerHTML = `<b>Playing ${note[0]} for ${noteLength.slice(0, 4)} seconds.</b>`;
             window.synth.triggerAttack(note[0], time);
         }, offset)
 
@@ -119,7 +131,10 @@ export function blockOrderToTransport(lines, blocks, synthType="triangle") {
 }
 
 export function stopAll() {
-    window.synth.releaseAll()
+    if (window.synth) {
+        window.synth.releaseAll()
+        window.synth.dispose();
+    }
     Tone.Transport.stop();
-    Tone.Transport.clear(0);
+    Tone.Transport.cancel(0);
 }
