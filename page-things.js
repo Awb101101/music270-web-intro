@@ -1,3 +1,3 @@
-document.getElementById("menuButton").onclick = () => {
-    document.getElementById("dropdownMenu").classList.toggle("hidden");
-};
+// document.getElementById("menuButton").onclick = () => {
+//     document.getElementById("dropdownMenu").classList.toggle("hidden");
+// };

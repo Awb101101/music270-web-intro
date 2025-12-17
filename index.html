@@ -2,35 +2,43 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Starter Drawing Synth</title>
+    <title>Drawing Synth</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 <!--TODO: Replace onclick logic with Event Listeners and remove global variables-->
-<h1>You can draw and hear things</h1>
-<button onclick="startAudio()">Start the synth</button>
-<button onclick="setBrushMode()" id="modeButton">Pen</button>
-<button id="menuButton">Something</button>
-<div id="dropdownMenu" class="dropdown hidden">
-    <button onclick="changeBrushColor('red')">Red Pen</button>
-    <button onclick="changeBrushColor('blue')">Blue Pen</button>
-    <button onclick="changeBrushColor('green')">Green Pen</button>
-</div>
-<button onclick="deleteAllCanvas()">Delete All</button>
-<button onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Play canvas</button>
-<div>
-    <canvas id="canvas" width="600" height="400" style="border:1px solid #ccc"></canvas>
-    <!--TODO: Split canvas into notes -->
-    <!--Split canvas into smaller quadrants
-        Assign quadrants to notes
-        Iterate over line object(s) drawn
-        If line intersects with quadrant, add note to transport
-        (?) Depending on # of times it appears change... length? (?)
-        (?) Color affects something else (?) octave?
-        Play transport
-    -->
+<h1>Drawing Synth</h1>
+<p>To use the synth, draw on the canvas. Different colors represent different octaves. Longer lines result in longer notes.</p>
+<!--<button onclick="startAudio()">Start the synth</button>-->
+<!--<button onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Play</button>-->
+<!--<button id="menuButton">Select Color</button>-->
+<!--<div id="dropdownMenu" class="dropdown hidden">-->
+<!--    <button onclick="changeBrushColor('red')">Red Pen</button>-->
+<!--    <button onclick="changeBrushColor('blue')">Blue Pen</button>-->
+<!--    <button onclick="changeBrushColor('green')">Green Pen</button>-->
+<!--</div>-->
+<!--<button onclick="deleteAllCanvas()">Delete All</button>-->
+<div class="container">
+    <div>
+        <button class="menu-button"  onclick="blockOrderToTransport(canvas.getObjects('path'), blocks)">Play</button>
+        <button class="menu-button" onclick="changeBrushColor('red')">Red Pen</button>
+        <button class="menu-button" onclick="changeBrushColor('blue')">Blue Pen</button>
+        <button class="menu-button" onclick="changeBrushColor('green')">Green Pen</button>
+        <button class="menu-button"  onclick="deleteAllCanvas()">Delete All</button>
+        <button class="menu-button"  onclick="stopAll()">Mute Sound</button>
+        <canvas id="canvas" width="600" height="400" style="border:1px solid #ccc;"></canvas>
+        <!--TODO: Split canvas into notes -->
+        <!--Split canvas into smaller quadrants
+            Assign quadrants to notes
+            Iterate over line object(s) drawn
+            If line intersects with quadrant, add note to transport
+            (?) Depending on # of times it appears change... length? (?)
+            (?) Color affects something else (?) octave?
+            Play transport
+        -->
+    </div>
 </div>
 <script src="./page-things.js"></script>
 <script src="https://unpkg.com/tone"></script>
@@ -43,7 +51,8 @@
         testTransport,
         stopTransport,
         getBlocksFromCanvas,
-        blockOrderToTransport
+        blockOrderToTransport,
+        stopAll
     } from "./sound-things.js";
 
     window.startAudio = startAudio;
@@ -54,6 +63,7 @@
     window.stopTransport = stopTransport;
     window.getBlocksFromCanvas = getBlocksFromCanvas;
     window.blockOrderToTransport = blockOrderToTransport;
+    window.stopAll = stopAll;
 
 </script>
 <!-- Load Fabric.js from CDN -->

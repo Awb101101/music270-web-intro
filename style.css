@@ -34,3 +34,14 @@ body {
 .hidden {
     display: none;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-button {
+    margin-right: 10px;
+    margin-bottom: 10px
+}

@@ -1,3 +1,5 @@
+window.stopSound = false
+
 export async function startAudio() {
     await Tone.start()
     console.log("Audio Started")
@@ -58,14 +60,20 @@ export function getBlocksFromCanvas(lines, blocks) {
                     block.yMin <= yCoord && block.yMax >= yCoord
                 ) {
                     if (line.stroke === "red" && prevNote !== block.note + "4") {
-                        blockOrder.push(block.note + "4");
+                        console.log("Red")
+                        blockOrder.push([block.note + "4", 0]);
                         prevNote = block.note + "4"
                     } else if (line.stroke === "blue" && prevNote !== block.note + "5") {
-                        blockOrder.push(block.note + "5");
+                        console.log("Blue")
+                        blockOrder.push([block.note + "5", 0]);
                         prevNote = block.note + "5"
                     } else if (line.stroke === "green" && prevNote !== block.note + "3") {
-                        blockOrder.push(block.note + "3");
+                        console.log("Green")
+                        blockOrder.push([block.note + "3", 0]);
                         prevNote = block.note + "3"
+                    } else {
+                        let duration = blockOrder.pop()
+                        blockOrder.push([duration[0], duration[1] + 0.1])
                     }
                 }
             }
@@ -74,18 +82,44 @@ export function getBlocksFromCanvas(lines, blocks) {
     return blockOrder;
 }
 
-export function blockOrderToTransport(lines, blocks) {
+export function blockOrderToTransport(lines, blocks, synthType="triangle") {
     const blockOrder = getBlocksFromCanvas(lines, blocks);
     console.log(blockOrder)
-    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-    let now = Tone.now();
-    let offset = 0
+    window.synth = new Tone.PolySynth(Tone.Synth, {
+        oscillator: {
+            type: synthType,
+        },
+        envelope : {
+            attack : 0.01,
+            decay : 0.1,
+            sustain : 0.3,
+            release : 0.3
+        }
+    }).toDestination();
+    window.now = Tone.now();
+    let offset = 0;
+    let prevNote = null;
+    Tone.getDestination().mute = false;
     for (const note of blockOrder) {
-        synth.triggerAttack(note, now + offset);
-        offset += 0.5;
         console.log("Playing:", note);
+
+        Tone.Transport.scheduleOnce((time) => {
+            window.synth.triggerAttack(note[0], time);
+        }, offset)
+
+        offset += note[1];
+
+        Tone.Transport.scheduleOnce((time) => {
+            window.synth.triggerRelease(note[0], time);
+        }, offset);
+
+        prevNote = note[0];
     }
-    for (const note of blockOrder) {
-        synth.triggerRelease(note, now + offset);
-    }
+    Tone.Transport.start();
+}
+
+export function stopAll() {
+    window.synth.releaseAll()
+    Tone.Transport.stop();
+    Tone.Transport.clear(0);
 }

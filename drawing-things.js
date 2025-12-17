@@ -20,7 +20,10 @@ export function deleteAllCanvas() {
 }
 
 export function changeBrushColor(color) {
+    const penBrush = new fabric.PencilBrush(canvas);
+    penBrush.width = 5;
     penBrush.color = color;
+    canvas.freeDrawingBrush = penBrush;
 }
 
 // Initialize Fabric canvas
@@ -33,13 +36,6 @@ const penBrush = new fabric.PencilBrush(canvas);
 penBrush.width = 5;
 penBrush.color = 'red';
 canvas.freeDrawingBrush = penBrush;
-
-const modeButton = document.getElementById("modeButton");
-
-modeButton.addEventListener("click", () => {
-    // Update label based on state
-    modeButton.textContent = canvas.isDrawingMode ? "Select" : "Pen";
-});
 
 canvas.on('path:created', (event) => {
     console.log('User drew a path:', event.path);
